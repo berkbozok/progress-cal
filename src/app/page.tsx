@@ -9,7 +9,7 @@ interface Row {
   weight: string;
   reps: string;
 }
-
+// function
 export default function Home() {
   // Initialize the state with an empty array to hold rows of type Row
   const [rows, setRows] = useState<Row[]>([]);
