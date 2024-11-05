@@ -68,6 +68,7 @@ export default function Home() {
               className="flex flex-row w-full bg-blue-200 p-5 rounded-md justify-between mt-2"
             >
               <div>{row.id}</div>
+              {/* Inputs */}
               <input
                 type="text"
                 placeholder="Name"
