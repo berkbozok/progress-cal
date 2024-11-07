@@ -14,15 +14,26 @@ interface Row {
 export default function RecordRow() {
   // Initialize the state with an empty array to hold rows of type Row
   const [rows, setRows] = useState<Row[]>([]);
-  const [staticRowPhoto, setStaticRowPhoto] = useState<string | null>(null);
+  const [staticRow, setStaticRow] = useState<Row>({
+    id: 0,
+    name: "",
+    weight: "",
+    reps: "",
+    photo: "",
+  });
   const [modalImage, setModalImage] = useState<string | null>(null);
 
-  // Function to add a new row to the array
-  function createRow() {
-    setRows((prevRows) => [
-      ...prevRows,
-      { id: prevRows.length + 1, name: "", weight: "", reps: "", photo: "" },
-    ]);
+  // Function to add the static row to the array when saving
+  function saveRow() {
+    if (staticRow.name && staticRow.weight && staticRow.reps) {
+      setRows((prevRows) => [
+        ...prevRows,
+        { ...staticRow, id: prevRows.length + 1 },
+      ]);
+      setStaticRow({ id: 0, name: "", weight: "", reps: "", photo: "" });
+    } else {
+      alert("Please fill in all fields before saving.");
+    }
   }
 
   // Function to remove a row by id
@@ -30,24 +41,21 @@ export default function RecordRow() {
     setRows((prevRows) => prevRows.filter((row) => row.id !== id));
   }
 
-  // Function to handle changes in the inputs for each row
-  function handleInputChange(
+  // Function to handle changes in the inputs for the static row
+  function handleStaticInputChange(
     e: ChangeEvent<HTMLInputElement>,
-    id: number,
     field: keyof Row // 'name' | 'weight' | 'reps'
   ) {
     const { value } = e.target;
-    setRows((prevRows) =>
-      prevRows.map((row) => (row.id === id ? { ...row, [field]: value } : row))
-    );
+    setStaticRow((prevRow) => ({ ...prevRow, [field]: value }));
   }
 
-  // Function to handle photo upload
+  // Function to handle photo upload for the static row
   function handlePhotoUpload(e: ChangeEvent<HTMLInputElement>, id: number) {
     if (e.target.files && e.target.files[0]) {
       const photoURL = URL.createObjectURL(e.target.files[0]);
       if (id === 0) {
-        setStaticRowPhoto(photoURL);
+        setStaticRow((prevRow) => ({ ...prevRow, photo: photoURL }));
       } else {
         setRows((prevRows) =>
           prevRows.map((row) =>
@@ -75,12 +83,12 @@ export default function RecordRow() {
         {/* Initial static row */}
         <div className="flex flex-wrap bg-gradient-to-r from-blue-600 to-blue-500 p-4 rounded-lg shadow-lg justify-between items-center mb-4">
           <div className="flex items-center w-1/4">
-            {staticRowPhoto ? (
+            {staticRow.photo ? (
               <img
-                src={staticRowPhoto}
+                src={staticRow.photo}
                 alt="Static row photo"
                 className="h-12 w-12 rounded-full cursor-pointer object-cover border border-gray-300"
-                onClick={() => openModal(staticRowPhoto)}
+                onClick={() => openModal(staticRow.photo!)}
               />
             ) : (
               <input
@@ -94,18 +102,30 @@ export default function RecordRow() {
           <input
             type="text"
             placeholder="Name"
+            value={staticRow.name}
+            onChange={(e) => handleStaticInputChange(e, "name")}
             className="bg-red-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
           />
           <input
             type="text"
             placeholder="Weight"
+            value={staticRow.weight}
+            onChange={(e) => handleStaticInputChange(e, "weight")}
             className="bg-orange-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
           />
           <input
             type="text"
             placeholder="Reps"
+            value={staticRow.reps}
+            onChange={(e) => handleStaticInputChange(e, "reps")}
             className="bg-yellow-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
           />
+          <button
+            onClick={saveRow}
+            className="bg-green-500 text-white p-2 rounded-md ml-2 hover:bg-green-600 transition-colors shadow-sm"
+          >
+            Save
+          </button>
         </div>
         {/* Dynamically rendered rows */}
         <div className="mt-4 space-y-4">
@@ -137,21 +157,21 @@ export default function RecordRow() {
                 type="text"
                 placeholder="Name"
                 value={row.name}
-                onChange={(e) => handleInputChange(e, row.id, "name")}
+                // onChange={(e) => handleInputChange(e, row.id, "name")}
                 className="bg-red-50 rounded-md p-2 w-1/4 border border-red-200 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
               />
               <input
                 type="text"
                 placeholder="Weight"
                 value={row.weight}
-                onChange={(e) => handleInputChange(e, row.id, "weight")}
+                // onChange={(e) => handleInputChange(e, row.id, "weight")}
                 className="bg-orange-50 rounded-md p-2 w-1/4 border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
               />
               <input
                 type="text"
                 placeholder="Reps"
                 value={row.reps}
-                onChange={(e) => handleInputChange(e, row.id, "reps")}
+                // onChange={(e) => handleInputChange(e, row.id, "reps")}
                 className="bg-yellow-50 rounded-md p-2 w-1/4 border border-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
               />
               <button
@@ -163,26 +183,19 @@ export default function RecordRow() {
             </div>
           ))}
         </div>
-        {/* Button to add a new row */}
-        <span className="flex justify-end mt-6">
-          <button
-            onClick={createRow}
-            className="bg-green-500 text-white px-4 py-2 rounded-md shadow-lg hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-300"
-          >
-            Add Row
-          </button>
-        </span>
       </div>
 
       {/* Modal for image preview */}
       {modalImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="relative max-w-sm max-h-[80%] bg-white rounded-md p-4">
-            <img
-              src={modalImage}
-              alt="Preview"
-              className="rounded-md w-full h-auto"
-            />
+          <div className="relative max-w-sm max-h-[80%] bg-white rounded-md p-4 border border-gray-200 overflow-auto">
+            <div className="flex items-center justify-center h-full w-full">
+              <img
+                src={modalImage}
+                alt="Preview"
+                className="rounded-md max-w-full max-h-full border border-gray-300"
+              />
+            </div>
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
