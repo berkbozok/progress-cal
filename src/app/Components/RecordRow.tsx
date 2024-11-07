@@ -81,13 +81,13 @@ export default function RecordRow() {
     <div className="mx-auto max-w-4xl items-center p-4 pb-16 gap-8 sm:p-12 font-sans">
       <div className="w-full">
         {/* Initial static row */}
-        <div className="flex flex-wrap bg-gradient-to-r from-blue-600 to-blue-500 p-4 rounded-lg shadow-lg justify-between items-center mb-4">
-          <div className="flex items-center w-1/4">
+        <div className="flex flex-wrap bg-gradient-to-r from-blue-600 to-blue-500 p-4 rounded-lg shadow-lg justify-between items-center mb-4 gap-2">
+          <div className="flex items-center w-20 h-20">
             {staticRow.photo ? (
               <img
                 src={staticRow.photo}
                 alt="Static row photo"
-                className="h-12 w-12 rounded-full cursor-pointer object-cover border border-gray-300"
+                className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
                 onClick={() => openModal(staticRow.photo!)}
               />
             ) : (
@@ -104,25 +104,25 @@ export default function RecordRow() {
             placeholder="Name"
             value={staticRow.name}
             onChange={(e) => handleStaticInputChange(e, "name")}
-            className="bg-red-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
+            className="bg-red-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
           />
           <input
             type="text"
             placeholder="Weight"
             value={staticRow.weight}
             onChange={(e) => handleStaticInputChange(e, "weight")}
-            className="bg-orange-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
+            className="bg-orange-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
           />
           <input
             type="text"
             placeholder="Reps"
             value={staticRow.reps}
             onChange={(e) => handleStaticInputChange(e, "reps")}
-            className="bg-yellow-100 rounded-md p-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
+            className="bg-yellow-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
           />
           <button
             onClick={saveRow}
-            className="bg-green-500 text-white p-2 rounded-md ml-2 hover:bg-green-600 transition-colors shadow-sm"
+            className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-colors shadow-sm w-24"
           >
             Save
           </button>
@@ -132,23 +132,18 @@ export default function RecordRow() {
           {rows.map((row) => (
             <div
               key={row.id}
-              className="flex flex-wrap bg-white p-4 rounded-lg shadow-md justify-between items-center hover:shadow-lg transition-shadow"
+              className="flex flex-wrap bg-gray-50 p-4 rounded-lg shadow-md justify-between items-center hover:shadow-lg transition-shadow gap-2"
             >
-              <div className="font-medium text-gray-700">{row.id}</div>
-              <div className="flex items-center w-1/4">
-                {row.photo ? (
+              <div className="font-medium text-gray-700 w-12 text-center">
+                {row.id}
+              </div>
+              <div className="flex items-center w-20 h-20">
+                {row.photo && (
                   <img
                     src={row.photo}
                     alt={`Row ${row.id} photo`}
-                    className="h-12 w-12 rounded-full cursor-pointer object-cover border border-gray-300"
+                    className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
                     onClick={() => openModal(row.photo)}
-                  />
-                ) : (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handlePhotoUpload(e, row.id)}
-                    className="text-gray-600"
                   />
                 )}
               </div>
@@ -157,26 +152,26 @@ export default function RecordRow() {
                 type="text"
                 placeholder="Name"
                 value={row.name}
-                // onChange={(e) => handleInputChange(e, row.id, "name")}
-                className="bg-red-50 rounded-md p-2 w-1/4 border border-red-200 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
+                disabled
+                className="bg-red-100 rounded-md p-2 w-1/5 border border-red-200 cursor-not-allowed"
               />
               <input
                 type="text"
                 placeholder="Weight"
                 value={row.weight}
-                // onChange={(e) => handleInputChange(e, row.id, "weight")}
-                className="bg-orange-50 rounded-md p-2 w-1/4 border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
+                disabled
+                className="bg-orange-100 rounded-md p-2 w-1/5 border border-orange-200 cursor-not-allowed"
               />
               <input
                 type="text"
                 placeholder="Reps"
                 value={row.reps}
-                // onChange={(e) => handleInputChange(e, row.id, "reps")}
-                className="bg-yellow-50 rounded-md p-2 w-1/4 border border-yellow-200 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
+                disabled
+                className="bg-yellow-100 rounded-md p-2 w-1/5 border border-yellow-200 cursor-not-allowed"
               />
               <button
                 onClick={() => removeRow(row.id)}
-                className="bg-red-500 text-white p-2 rounded-md ml-2 hover:bg-red-600 transition-colors shadow-sm"
+                className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-colors shadow-sm w-24"
               >
                 Remove
               </button>
@@ -188,7 +183,7 @@ export default function RecordRow() {
       {/* Modal for image preview */}
       {modalImage && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="relative max-w-sm max-h-[80%] bg-white rounded-md p-4 border border-gray-200 overflow-auto">
+          <div className="relative max-w-md max-h-[80%] bg-white rounded-md p-4 border border-gray-200 overflow-auto">
             <div className="flex items-center justify-center h-full w-full">
               <img
                 src={modalImage}
