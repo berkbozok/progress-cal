@@ -91,12 +91,21 @@ export default function RecordRow() {
                 onClick={() => openModal(staticRow.photo!)}
               />
             ) : (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handlePhotoUpload(e, 0)}
-                className="text-gray-600"
-              />
+              <>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handlePhotoUpload(e, 0)}
+                  className="hidden"
+                  id="photoUpload"
+                />
+                <label
+                  htmlFor="photoUpload"
+                  className="cursor-pointer bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
+                >
+                  Upload Image
+                </label>
+              </>
             )}
           </div>
           <input
@@ -104,21 +113,21 @@ export default function RecordRow() {
             placeholder="Name"
             value={staticRow.name}
             onChange={(e) => handleStaticInputChange(e, "name")}
-            className="bg-red-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-red-300 transition"
+            className="text-black rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
           />
           <input
             type="text"
             placeholder="Weight"
             value={staticRow.weight}
             onChange={(e) => handleStaticInputChange(e, "weight")}
-            className="bg-orange-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-orange-300 transition"
+            className="text-black rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
           />
           <input
             type="text"
             placeholder="Reps"
             value={staticRow.reps}
             onChange={(e) => handleStaticInputChange(e, "reps")}
-            className="bg-yellow-100 rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
+            className="text-black rounded-md p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
           />
           <button
             onClick={saveRow}
@@ -153,21 +162,21 @@ export default function RecordRow() {
                 placeholder="Name"
                 value={row.name}
                 disabled
-                className="bg-red-100 rounded-md p-2 w-1/5 border border-red-200 cursor-not-allowed"
+                className="text-black rounded-md p-2 w-1/5 border  cursor-not-allowed"
               />
               <input
                 type="text"
                 placeholder="Weight"
                 value={row.weight}
                 disabled
-                className="bg-orange-100 rounded-md p-2 w-1/5 border border-orange-200 cursor-not-allowed"
+                className="text-black rounded-md p-2 w-1/5 border  cursor-not-allowed"
               />
               <input
                 type="text"
                 placeholder="Reps"
                 value={row.reps}
                 disabled
-                className="bg-yellow-100 rounded-md p-2 w-1/5 border border-yellow-200 cursor-not-allowed"
+                className="text-black rounded-md p-2 w-1/5 border cursor-not-allowed"
               />
               <button
                 onClick={() => removeRow(row.id)}
