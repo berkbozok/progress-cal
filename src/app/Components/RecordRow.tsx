@@ -146,6 +146,7 @@ export default function RecordRow() {
               <div className="font-medium text-gray-700 w-12 text-center">
                 {row.id}
               </div>
+              {/* Photo */}
               <div className="flex items-center w-20 h-20">
                 {row.photo && (
                   <img
