@@ -153,7 +153,7 @@ export default function RecordRow() {
                     src={row.photo}
                     alt={`Row ${row.id} photo`}
                     className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
-                    onClick={() => openModal(row.photo)}
+                    onClick={() => openModal(row?.photo)}
                   />
                 )}
               </div>
