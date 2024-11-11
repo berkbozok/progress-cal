@@ -201,6 +201,7 @@ export default function RecordRow() {
                 className="rounded-md max-w-full max-h-full border border-gray-300"
               />
             </div>
+            {/* Close button */}
             <button
               onClick={closeModal}
               className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
