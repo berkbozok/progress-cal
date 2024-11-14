@@ -66,12 +66,11 @@ export default function RecordRow() {
     }
   }
 
-  // Function to open modal
+  // Modal functions
   function openModal(photo: string) {
     setModalImage(photo);
   }
 
-  // Function to close modal
   function closeModal() {
     setModalImage(null);
   }
