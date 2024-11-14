@@ -1,7 +1,7 @@
 // Imports
 import { useState, ChangeEvent } from "react";
 
-// Define the type for a row
+// Types
 interface Row {
   id: number;
   name: string;
