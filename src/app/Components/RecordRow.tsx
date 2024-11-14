@@ -10,7 +10,6 @@ interface Row {
   photo?: string;
 }
 
-// function test
 export default function RecordRow() {
   // Initialize the state with an empty array to hold rows of type Row
   const [rows, setRows] = useState<Row[]>([]);
