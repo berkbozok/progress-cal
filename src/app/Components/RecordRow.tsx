@@ -92,6 +92,7 @@ export default function RecordRow() {
               />
             ) : (
               <>
+                {/* Input */}
                 <input
                   type="file"
                   accept="image/*"
