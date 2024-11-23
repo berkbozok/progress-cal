@@ -43,7 +43,7 @@ export default function RecordRow() {
   // Function to handle changes in the inputs for the static row
   function handleStaticInputChange(
     e: ChangeEvent<HTMLInputElement>,
-    field: keyof Row // 'name' | 'weight' | 'reps'
+    field: keyof Row
   ) {
     const { value } = e.target;
     setStaticRow((prevRow) => ({ ...prevRow, [field]: value }));
@@ -86,7 +86,7 @@ export default function RecordRow() {
                 src={staticRow.photo}
                 alt="Static row photo"
                 className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
-                onClick={() => openModal(staticRow.photo!)}
+                onClick={() => staticRow.photo && openModal(staticRow.photo)}
               />
             ) : (
               <>
@@ -154,8 +154,7 @@ export default function RecordRow() {
                     src={row.photo}
                     alt={`Row ${row.id} photo`}
                     className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
-                    // TO BE FIXED
-                    onClick={() => openModal(row?.photo)}
+                    onClick={() => row.photo && openModal(row.photo)}
                   />
                 )}
               </div>
@@ -165,14 +164,14 @@ export default function RecordRow() {
                 placeholder="Name"
                 value={row.name}
                 disabled
-                className="text-black rounded-md p-2 w-1/5 border  cursor-not-allowed"
+                className="text-black rounded-md p-2 w-1/5 border cursor-not-allowed"
               />
               <input
                 type="text"
                 placeholder="Weight"
                 value={row.weight}
                 disabled
-                className="text-black rounded-md p-2 w-1/5 border  cursor-not-allowed"
+                className="text-black rounded-md p-2 w-1/5 border cursor-not-allowed"
               />
               <input
                 type="text"
