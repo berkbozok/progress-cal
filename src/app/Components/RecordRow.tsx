@@ -10,7 +10,6 @@ interface Row {
   photo?: string;
 }
 
-
 export default function RecordRow() {
   // Initialize the state with an empty array to hold rows of type Row
   const [rows, setRows] = useState<Row[]>([]);
@@ -155,6 +154,7 @@ export default function RecordRow() {
                     src={row.photo}
                     alt={`Row ${row.id} photo`}
                     className="h-full w-full rounded-full cursor-pointer object-cover border border-gray-300"
+                    // TO BE FIXED
                     onClick={() => openModal(row?.photo)}
                   />
                 )}
