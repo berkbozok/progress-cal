@@ -71,7 +71,6 @@ export default function RecordRow() {
   function openModal(photo: string) {
     setModalImage(photo);
   }
-
   function closeModal() {
     setModalImage(null);
   }
