@@ -76,7 +76,6 @@ export default function RecordRow() {
     setModalImage(null);
   }
 
-  // Return function
   return (
     <div className="mx-auto max-w-4xl items-center p-4 pb-16 gap-8 sm:p-12 font-sans">
       <div className="w-full">
