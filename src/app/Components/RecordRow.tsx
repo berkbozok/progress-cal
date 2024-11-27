@@ -20,6 +20,8 @@ export default function RecordRow() {
     reps: "",
     photo: "",
   });
+
+  // Setting modal image
   const [modalImage, setModalImage] = useState<string | null>(null);
 
   // Function to add the static row to the array when saving
