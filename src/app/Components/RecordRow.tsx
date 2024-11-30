@@ -159,6 +159,7 @@ export default function RecordRow() {
                   />
                 )}
               </div>
+              {/* Inputs */}
               <input
                 type="text"
                 placeholder="Name"
