@@ -214,7 +214,6 @@ export default function RecordRow() {
         </div>
       )}
 
-      {/* Footer */}
       <footer className="text-gray-500 text-sm mt-8 text-center">
         &copy; 2024 Progress Cal
       </footer>
