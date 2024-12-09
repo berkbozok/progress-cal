@@ -221,5 +221,3 @@ export default function RecordRow() {
     </div>
   );
 }
-
-// End of component
