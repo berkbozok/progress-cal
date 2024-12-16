@@ -11,7 +11,6 @@ interface Row {
 }
 
 export default function RecordRow() {
-  // Initialize the state with an empty array to hold rows of type Row
   const [rows, setRows] = useState<Row[]>([]);
   const [staticRow, setStaticRow] = useState<Row>({
     id: 0,
