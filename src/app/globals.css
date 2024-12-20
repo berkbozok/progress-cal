@@ -14,7 +14,7 @@
     --foreground: #ededed;
   }
 }
-/* Body */
+
 body {
   color: var(--foreground);
   /* Background default color */
