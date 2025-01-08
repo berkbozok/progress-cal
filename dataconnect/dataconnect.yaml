@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "progress-cal"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "progress-cal-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
