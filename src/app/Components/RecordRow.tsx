@@ -1,14 +1,20 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { db } from "../../../firebase.js";
-import { doc, updateDoc, getDoc, arrayUnion } from "firebase/firestore";
-import SavedRow from "./SavedRow"; // Import the new component
+import {
+  doc,
+  updateDoc,
+  getDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import SavedRow from "./SavedRow";
 
 interface Row {
   id: number;
   name: string;
   weight: string;
   reps: string;
-  photo?: string | undefined; // Base64 string
+  photo?: string; // Base64 string
 }
 
 export default function RecordRow() {
@@ -99,6 +105,25 @@ export default function RecordRow() {
     }
   }
 
+  async function deleteRow(row: Row) {
+    try {
+      const rowsDocRef = doc(db, "exercises", "rows");
+
+      // Remove the row from Firestore
+      await updateDoc(rowsDocRef, {
+        rows: arrayRemove(row),
+      });
+
+      // Remove the row locally
+      setRows((prevRows) => prevRows.filter((r) => r.id !== row.id));
+
+      alert("Row deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting row from Firestore:", error);
+      alert("Failed to delete row. Please try again.");
+    }
+  }
+
   function handleStaticInputChange(
     e: ChangeEvent<HTMLInputElement>,
     field: keyof Row
@@ -176,7 +201,7 @@ export default function RecordRow() {
       </div>
 
       {/* Display Saved Rows */}
-      <SavedRow rows={rows} />
+      <SavedRow rows={rows} onDelete={deleteRow} />
     </div>
   );
 }
