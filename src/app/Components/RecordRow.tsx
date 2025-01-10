@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { db } from "../../../firebase.js";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, getDoc, arrayUnion } from "firebase/firestore";
 
 interface Row {
   id: number;
@@ -18,13 +18,34 @@ export default function RecordRow() {
     reps: "",
   });
 
+  // Fetch rows from Firestore when the component loads
+  useEffect(() => {
+    async function fetchRows() {
+      try {
+        const rowsDocRef = doc(db, "exercises", "rows");
+        const docSnapshot = await getDoc(rowsDocRef);
+
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          if (data.rows && Array.isArray(data.rows)) {
+            setRows(data.rows); // Set rows state with fetched data
+          }
+        } else {
+          console.error("Document does not exist!");
+        }
+      } catch (error) {
+        console.error("Error fetching rows from Firestore:", error);
+      }
+    }
+
+    fetchRows();
+  }, []); // Empty dependency array ensures this runs only once
+
   async function saveRow() {
     if (staticRow.name && staticRow.weight && staticRow.reps) {
       try {
-        // Reference to the document in Firestore
         const rowsDocRef = doc(db, "exercises", "rows");
 
-        // Create the new row
         const newRow = {
           id: rows.length + 1, // Unique ID for this row
           name: staticRow.name,
@@ -32,15 +53,11 @@ export default function RecordRow() {
           reps: staticRow.reps,
         };
 
-        // Add the new row to Firestore using arrayUnion
         await updateDoc(rowsDocRef, {
           rows: arrayUnion(newRow),
         });
 
-        // Update the local state
         setRows((prevRows) => [...prevRows, newRow]);
-
-        // Reset input fields
         setStaticRow({ id: 0, name: "", weight: "", reps: "" });
 
         alert("Row added successfully!");
