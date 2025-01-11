@@ -124,6 +124,33 @@ export default function RecordRow() {
     }
   }
 
+  async function updateRow(updatedRow: Row) {
+    try {
+      const rowsDocRef = doc(db, "exercises", "rows");
+
+      // Remove the old row and add the updated row
+      const oldRow = rows.find((row) => row.id === updatedRow.id);
+      if (oldRow) {
+        await updateDoc(rowsDocRef, {
+          rows: arrayRemove(oldRow),
+        });
+      }
+      await updateDoc(rowsDocRef, {
+        rows: arrayUnion(updatedRow),
+      });
+
+      // Update the local state
+      setRows((prevRows) =>
+        prevRows.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+      );
+
+      alert("Row updated successfully!");
+    } catch (error) {
+      console.error("Error updating row in Firestore:", error);
+      alert("Failed to update row. Please try again.");
+    }
+  }
+
   function handleStaticInputChange(
     e: ChangeEvent<HTMLInputElement>,
     field: keyof Row
@@ -201,7 +228,7 @@ export default function RecordRow() {
       </div>
 
       {/* Display Saved Rows */}
-      <SavedRow rows={rows} onDelete={deleteRow} />
+      <SavedRow rows={rows} onDelete={deleteRow} onUpdate={updateRow} />
     </div>
   );
 }
