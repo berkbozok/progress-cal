@@ -124,6 +124,7 @@ export default function RecordRow() {
     }
   }
 
+  // Updating row
   async function updateRow(updatedRow: Row) {
     try {
       const rowsDocRef = doc(db, "exercises", "rows");
