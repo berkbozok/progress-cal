@@ -152,6 +152,7 @@ export default function RecordRow() {
     }
   }
 
+  // editing inputs
   function handleStaticInputChange(
     e: ChangeEvent<HTMLInputElement>,
     field: keyof Row
