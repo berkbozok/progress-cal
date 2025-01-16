@@ -74,7 +74,7 @@ export default function RecordRow() {
     }
     return undefined;
   }
-
+  // saving row
   async function saveRow() {
     if (staticRow.name && staticRow.weight && staticRow.reps) {
       try {
