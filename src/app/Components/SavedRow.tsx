@@ -63,7 +63,7 @@ const SavedRow: React.FC<Props> = ({ rows, onDelete, onUpdate }) => {
                 src={row.photo}
                 alt="Row Photo"
                 className="h-12 w-12 rounded-full cursor-pointer object-cover border border-gray-300"
-                onClick={() => openModal(row.photo)}
+                onClick={() => row.photo && openModal(row.photo)}
               />
             )}
           </div>
