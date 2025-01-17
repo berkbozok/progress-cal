@@ -28,8 +28,8 @@ const SavedRow: React.FC<Props> = ({ rows, onDelete, onUpdate }) => {
   }
 
   function handleEdit(row: Row) {
-    setEditingRow(row.id); // Set the row to be edited
-    setEditedRow({ ...row }); // Initialize the editedRow state
+    setEditingRow(row.id);
+    setEditedRow({ ...row });
   }
 
   function handleInputChange(
